@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Sending Build Started email...'
                 emailext(
-                    subject: "🚀 Build Started: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    subject: "Build Started: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     body: """
 Hello Team,
 
@@ -99,7 +99,7 @@ Jenkins CI
             emailext(
                 subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
-Good news 🎉
+Good news!
 
 The Jenkins pipeline completed successfully.
 
@@ -123,7 +123,7 @@ Jenkins CI
             emailext(
                 subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
-Attention ❗
+Attention!
 
 The Jenkins pipeline has FAILED.
 
