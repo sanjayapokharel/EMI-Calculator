@@ -61,5 +61,6 @@ npx playwright show-report
 - **Stability practices:**add `retries` and artifact capture for flaky tests.
 - **Reporting & triage:** use Playwright HTML reports and saved traces; fail-fast on critical mismatches (chart vs table)
 
-
-
+**CI Setup**
+I have used local Jenkins to build the pipeline and trigger the email for pass/fail case. For Reference, I have attached the full pass report generated from Jenkins.
+ 

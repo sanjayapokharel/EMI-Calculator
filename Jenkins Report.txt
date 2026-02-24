@@ -1,0 +1,207 @@
+Started by user Sanjaya Pokharel
+Obtained Declarative.txt from git https://github.com/sanjayapokharel/EMI-Calculator.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git.exe rev-parse --resolve-git-dir C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://github.com/sanjayapokharel/EMI-Calculator.git # timeout=10
+Fetching upstream changes from https://github.com/sanjayapokharel/EMI-Calculator.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.53.0.windows.1'
+ > git.exe fetch --tags --force --progress -- https://github.com/sanjayapokharel/EMI-Calculator.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git.exe rev-parse "refs/remotes/origin/main^{commit}" # timeout=10
+Checking out Revision f30f0fd91aec19772b901d02b17e4b06ed44ed59 (refs/remotes/origin/main)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f f30f0fd91aec19772b901d02b17e4b06ed44ed59 # timeout=10
+Commit message: "declare"
+ > git.exe rev-list --no-walk 2bd0b079f14a6e767b6029e2e685e3a47a8def56 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Notify Build Started)
+[Pipeline] echo
+Sending Build Started email...
+[Pipeline] emailext
+Sending email to: psanzay11@gmail.com
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Checkout Source Code)
+[Pipeline] echo
+Checking out source code from Git...
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git.exe rev-parse --resolve-git-dir C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://github.com/sanjayapokharel/EMI-Calculator.git # timeout=10
+Fetching upstream changes from https://github.com/sanjayapokharel/EMI-Calculator.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.53.0.windows.1'
+ > git.exe fetch --tags --force --progress -- https://github.com/sanjayapokharel/EMI-Calculator.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git.exe rev-parse "refs/remotes/origin/main^{commit}" # timeout=10
+Checking out Revision f30f0fd91aec19772b901d02b17e4b06ed44ed59 (refs/remotes/origin/main)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f f30f0fd91aec19772b901d02b17e4b06ed44ed59 # timeout=10
+Commit message: "declare"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Verify Node & NPM)
+[Pipeline] echo
+Checking Node.js and npm versions...
+[Pipeline] bat
+
+C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator>node -v 
+v24.13.0
+[Pipeline] bat
+
+C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator>npm -v 
+11.6.2
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Project Dependencies)
+[Pipeline] echo
+Installing npm dependencies...
+[Pipeline] bat
+
+C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator>npm ci 
+
+added 14 packages, and audited 15 packages in 1s
+
+1 high severity vulnerability
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Playwright Browsers)
+[Pipeline] echo
+Installing Playwright browsers...
+[Pipeline] bat
+
+C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator>npx playwright install 
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Playwright Tests)
+[Pipeline] echo
+Executing Playwright tests...
+[Pipeline] bat
+
+C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator>npx playwright test --reporter=html 
+
+Running 3 tests using 3 workers
+Bars count: [33m21[39m
+Total Payment from Excel: [33m10796711[39m
+Total Payment values match with excel and application!
+Â·Chart Balance is :      49,14,492
+Table Balance is :      49,14,492
+Chart and Table Balance match with each other
+Chart Balance is :      48,12,835
+Table Balance is :      48,12,835
+Chart and Table Balance match with each other
+Chart Balance is :      47,01,642
+Table Balance is :      47,01,642
+Chart and Table Balance match with each other
+Chart Balance is :      45,80,019
+Table Balance is :      45,80,019
+Chart and Table Balance match with each other
+Chart Balance is :      44,46,986
+Table Balance is :      44,46,986
+Chart and Table Balance match with each other
+Chart Balance is :      43,01,474
+Table Balance is :      43,01,474
+Chart and Table Balance match with each other
+Chart Balance is :      41,42,312
+Table Balance is :      41,42,312
+Chart and Table Balance match with each other
+Chart Balance is :      39,68,220
+Table Balance is :      39,68,220
+Chart and Table Balance match with each other
+Chart Balance is :      37,77,796
+Table Balance is :      37,77,796
+Chart and Table Balance match with each other
+Chart Balance is :      35,69,509
+Table Balance is :      35,69,509
+Chart and Table Balance match with each other
+Chart Balance is :      33,41,684
+Table Balance is :      33,41,684
+Chart and Table Balance match with each other
+Chart Balance is :      30,92,487
+Table Balance is :      30,92,487
+Chart and Table Balance match with each other
+Chart Balance is :      28,19,914
+Table Balance is :      28,19,914
+Chart and Table Balance match with each other
+Chart Balance is :      25,21,771
+Table Balance is :      25,21,771
+Chart and Table Balance match with each other
+Chart Balance is :      21,95,661
+Table Balance is :      21,95,661
+Chart and Table Balance match with each other
+Chart Balance is :      18,38,959
+Table Balance is :      18,38,959
+Chart and Table Balance match with each other
+Chart Balance is :      14,48,796
+Table Balance is :      14,48,796
+Chart and Table Balance match with each other
+Chart Balance is :      10,22,033
+Table Balance is :      10,22,033
+Chart and Table Balance match with each other
+Chart Balance is :      5,55,236
+Table Balance is :      5,55,236
+Chart and Table Balance match with each other
+Chart Balance is :      44,651
+Table Balance is :      44,651
+Chart and Table Balance match with each other
+Chart Balance is :      0
+Table Balance is :      0
+Chart and Table Balance match with each other
+Â·EMI from App: [33m183291[39m
+Calculated EMI: [33m183291[39m
+EMI values match!
+Â·
+  3 passed (17.6s)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Archiving Playwright HTML report...
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] publishHTML
+[htmlpublisher] Archiving HTML reports...
+[htmlpublisher] Archiving at BUILD level C:\ProgramData\Jenkins\.jenkins\workspace\EMI calculator\playwright-report to Playwright_20Report
+[htmlpublisher] Copying recursive using current thread
+[Pipeline] emailext
+Sending email to: psanzay11@gmail.com
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
