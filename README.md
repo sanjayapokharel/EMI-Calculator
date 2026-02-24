@@ -1,31 +1,22 @@
 # EMI Calculator — Playwright Tests
-
-Playwright automated tests for the EMI Calculator site (https://emicalculator.net/).
-
-# EMI Calculator — Playwright Tests
-
 Playwright automated tests for the EMI Calculator site (https://emicalculator.net/).
 
 **Prerequisites**
 - Node.js v16+ installed.
 
-
 **Execution steps**
 1. Install dependencies and browsers:
-
 ```bash
 npm install
 npx playwright install
 ```
 
 2. Run the full test suite:
-
 ```bash
 npx playwright test
 ```
 
 3. Run a single spec (headed for debugging):
-
 ```bash
 npx playwright test tests/tooltip.spec.ts --project=chromium --headed
 ```

@@ -97,7 +97,7 @@ Jenkins CI
 
         success {
             emailext(
-                subject: "✅ Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
 Good news 🎉
 
@@ -121,7 +121,7 @@ Jenkins CI
 
         failure {
             emailext(
-                subject: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
 Attention ❗
 
@@ -136,13 +136,13 @@ ${env.BUILD_URL}Playwright_Report/
 Regards,
 Jenkins CI
 """,
-                to: "psanzay11@gmail.com, dpesadhikari@gmail.com"
+                to: "psanzay11@gmail.com"
             )
         }
          aborted {
-        echo "⚠️ Build was aborted by user!"
+        echo "Build was aborted by user!"
         emailext(
-            subject: "⚠️ Build Aborted: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            subject: "Build Aborted: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
             body: """
 The Jenkins pipeline was manually aborted.
 
