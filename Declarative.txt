@@ -1,0 +1,163 @@
+pipeline {
+    agent any
+
+    environment {
+        NODE_ENV = 'test'
+    }
+
+    stages {
+
+        // 🔔 Notify Build Started
+        stage('Notify Build Started') {
+            steps {
+                echo 'Sending Build Started email...'
+                emailext(
+                    subject: "🚀 Build Started: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """
+Hello Team,
+
+A Jenkins pipeline has started.
+
+Job Name     : ${env.JOB_NAME}
+Build Number : #${env.BUILD_NUMBER}
+Node         : ${env.NODE_NAME}
+Environment  : Localhost Jenkins
+
+Build URL:
+${env.BUILD_URL}
+
+Regards,
+Jenkins CI
+""",
+                    to: "psanzay11@gmail.com, dpesadhikari@gmail.com"
+                )
+            }
+        }
+
+        // 🔹 Checkout Code
+        stage('Checkout Source Code') {
+            steps {
+                echo 'Checking out source code from Git...'
+                checkout scm
+            }
+        }
+
+        // 🔹 Verify Node & NPM
+        stage('Verify Node & NPM') {
+            steps {
+                echo 'Checking Node.js and npm versions...'
+                bat 'node -v'
+                bat 'npm -v'
+            }
+        }
+
+        // 🔹 Install Dependencies
+        stage('Install Project Dependencies') {
+            steps {
+                echo 'Installing npm dependencies...'
+                bat 'npm ci'
+            }
+        }
+
+        // 🔹 Install Playwright Browsers
+        stage('Install Playwright Browsers') {
+            steps {
+                echo 'Installing Playwright browsers...'
+                bat 'npx playwright install'
+            }
+        }
+
+        // 🔹 Run Playwright Tests & Generate HTML Report
+        stage('Run Playwright Tests') {
+            steps {
+                echo 'Executing Playwright tests...'
+                // Ensure Playwright HTML report is generated
+                bat 'npx playwright test --reporter=html'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Archiving Playwright HTML report...'
+
+            // Archive report artifacts
+            archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
+
+            // Publish HTML report in Jenkins UI
+            publishHTML([
+                allowMissing: false,
+                reportDir: 'playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright Report',
+                keepAll: true,
+                alwaysLinkToLastBuild: true
+            ])
+        }
+
+        success {
+            emailext(
+                subject: "✅ Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Good news 🎉
+
+The Jenkins pipeline completed successfully.
+
+Job Name     : ${env.JOB_NAME}
+Build Number : #${env.BUILD_NUMBER}
+
+Playwright Report:
+${env.BUILD_URL}Playwright_Report/
+
+Build URL:
+${env.BUILD_URL}
+
+Regards,
+Jenkins CI
+""",
+                to: "psanzay11@gmail.com, dpesadhikari@gmail.com"
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Attention ❗
+
+The Jenkins pipeline has FAILED.
+
+Job Name     : ${env.JOB_NAME}
+Build Number : #${env.BUILD_NUMBER}
+
+Check logs and Playwright report:
+${env.BUILD_URL}Playwright_Report/
+
+Regards,
+Jenkins CI
+""",
+                to: "psanzay11@gmail.com, dpesadhikari@gmail.com"
+            )
+        }
+         aborted {
+        echo "⚠️ Build was aborted by user!"
+        emailext(
+            subject: "⚠️ Build Aborted: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+The Jenkins pipeline was manually aborted.
+
+Job Name     : ${env.JOB_NAME}
+Build Number : #${env.BUILD_NUMBER}
+Node         : ${env.NODE_NAME}
+
+Build URL:
+${env.BUILD_URL}
+
+Regards,
+Jenkins CI
+""",
+            to: "psanzay11@gmail.com, dpesadhikari@gmail.com"
+        )
+    }
+    }
+}
