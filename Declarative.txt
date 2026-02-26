@@ -78,41 +78,40 @@ Jenkins CI
     }
 
     post {
-         always {
+
+    always {
+        echo 'Archiving Playwright HTML report...'
+
+        // Archive report in Jenkins
         archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
-        zip zipFile: 'PlaywrightReport.zip', dir: 'playwright-report'
+
+        // Zip full report folder (important for Playwright)
+        bat 'powershell Compress-Archive -Path playwright-report\\* -DestinationPath PlaywrightReport.zip -Force'
+
+        // Publish report in Jenkins UI
+        publishHTML([
+            allowMissing: false,
+            reportDir: 'playwright-report',
+            reportFiles: 'index.html',
+            reportName: 'Playwright Report',
+            keepAll: true,
+            alwaysLinkToLastBuild: true
+        ])
     }
-        always 
-        
-        {
-            echo 'Archiving Playwright HTML report...'
 
-            // Archive report artifacts
-            archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
-
-            // Publish HTML report in Jenkins UI
-            publishHTML([
-                allowMissing: false,
-                reportDir: 'playwright-report',
-                reportFiles: 'index.html',
-                reportName: 'Playwright Report',
-                keepAll: true,
-                alwaysLinkToLastBuild: true
-            ])
-        }
-
-        success {
-            emailext(
-                subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
+    success {
+        emailext(
+            subject: "✅ Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
 Good news!
 
 The Jenkins pipeline completed successfully.
 
 Job Name     : ${env.JOB_NAME}
 Build Number : #${env.BUILD_NUMBER}
+Node         : ${env.NODE_NAME}
 
-Playwright Report:
+View Report in Jenkins:
 ${env.BUILD_URL}Playwright_Report/
 
 Build URL:
@@ -121,14 +120,15 @@ ${env.BUILD_URL}
 Regards,
 Jenkins CI
 """,
-                to: "psanzay11@gmail.com"
-            )
-        }
+            to: "psanzay11@gmail.com",
+            attachmentsPattern: 'PlaywrightReport.zip'
+        )
+    }
 
-        failure {
-            emailext(
-                subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
+    failure {
+        emailext(
+            subject: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
 Attention!
 
 The Jenkins pipeline has FAILED.
@@ -136,25 +136,25 @@ The Jenkins pipeline has FAILED.
 Job Name     : ${env.JOB_NAME}
 Build Number : #${env.BUILD_NUMBER}
 
-Check logs and Playwright report:
+Check logs and report:
 ${env.BUILD_URL}Playwright_Report/
 
 Regards,
 Jenkins CI
 """,
-                to: "psanzay11@gmail.com"
-            )
-        }
-         aborted {
-        echo "Build was aborted by user!"
+            to: "psanzay11@gmail.com",
+            attachmentsPattern: 'PlaywrightReport.zip'
+        )
+    }
+
+    aborted {
         emailext(
-            subject: "Build Aborted: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            subject: "⚠️ Build Aborted: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
             body: """
 The Jenkins pipeline was manually aborted.
 
 Job Name     : ${env.JOB_NAME}
 Build Number : #${env.BUILD_NUMBER}
-Node         : ${env.NODE_NAME}
 
 Build URL:
 ${env.BUILD_URL}
@@ -165,5 +165,5 @@ Jenkins CI
             to: "psanzay11@gmail.com"
         )
     }
-    }
+}
 }
