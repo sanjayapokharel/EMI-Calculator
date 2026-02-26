@@ -78,7 +78,13 @@ Jenkins CI
     }
 
     post {
-        always {
+         always {
+        archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
+        zip zipFile: 'PlaywrightReport.zip', dir: 'playwright-report'
+    }
+        always 
+        
+        {
             echo 'Archiving Playwright HTML report...'
 
             // Archive report artifacts
