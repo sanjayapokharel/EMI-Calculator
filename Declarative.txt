@@ -89,11 +89,14 @@ Jenkins CI
         bat 'powershell Compress-Archive -Path playwright-report\\* -DestinationPath PlaywrightReport.zip -Force'
 
         // Publish report in Jenkins UI
-       publishHTML([
-    reportDir: 'playwright-report',
-    reportFiles: 'index.html',
-    reportName: 'Playwright Report'
-])
+        publishHTML([
+            allowMissing: false,
+            reportDir: 'playwright-report',
+            reportFiles: 'index.html',
+            reportName: 'Playwright Report',
+            keepAll: true,
+            alwaysLinkToLastBuild: true
+        ])
     }
 
     success {
