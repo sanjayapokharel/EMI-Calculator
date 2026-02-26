@@ -111,8 +111,6 @@ Job Name     : ${env.JOB_NAME}
 Build Number : #${env.BUILD_NUMBER}
 Node         : ${env.NODE_NAME}
 
-View Report in Jenkins:
-${env.BUILD_URL}Playwright_Report/
 
 Build URL:
 ${env.BUILD_URL}
