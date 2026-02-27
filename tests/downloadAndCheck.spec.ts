@@ -35,5 +35,4 @@ test('Verify Total Payment from downloaded Excel', async ({ page }) => {
     } else {
         console.log('Total Payment values do not match with excel and application!');
     }
-
 });
