@@ -29,7 +29,7 @@ ${env.BUILD_URL}
 Regards,
 Jenkins CI
 """,
-                    to: "psanzay11@gmail.com,dpesadhikari@gmail.com"
+                    to: "psanzay11@gmail.com"
                 )
             }
         }
@@ -118,7 +118,7 @@ ${env.BUILD_URL}
 Regards,
 Jenkins CI
 """,
-            to: "psanzay11@gmail.com,dpesadhikari@gmail.com",
+            to: "psanzay11@gmail.com",
             attachmentsPattern: 'PlaywrightReport.zip'
         )
     }
@@ -140,7 +140,7 @@ ${env.BUILD_URL}Playwright_Report/
 Regards,
 Jenkins CI
 """,
-            to: "psanzay11@gmail.com,dpesadhikari@gmail.com",
+            to: "psanzay11@gmail.com",
             attachmentsPattern: 'PlaywrightReport.zip'
         )
     }
@@ -160,7 +160,7 @@ ${env.BUILD_URL}
 Regards,
 Jenkins CI
 """,
-            to: "psanzay11@gmail.com,dpesadhikari@gmail.com"
+            to: "psanzay11@gmail.com"
         )
     }
 }

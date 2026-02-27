@@ -44,12 +44,4 @@ test('Extract tooltip text from Highcharts bars', async ({ page }) => {
 
   }
 
-
-
-
-
-
-
-
-
 });
